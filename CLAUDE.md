@@ -77,6 +77,12 @@ for approval before adding a dependency.
 - Naming: descriptive over clever. `getReviewQueueForUser` over `getQueue`.
 - No dead code, no commented-out blocks left behind, no `console.log` in
   committed code (use the logger in `lib/log.ts`).
+- Significant architectural or technical decisions are documented as ADRs in
+  `docs/adr/`. Before implementing a meaningful choice — choice of library,
+  architectural pattern, security boundary, or non-trivial trade-off — write an
+  ADR capturing context, options, decision, and consequences. ADRs are short
+  (1 page) and immutable; reversed decisions are superseded by new ADRs, not
+  edited.
 
 ---
 
