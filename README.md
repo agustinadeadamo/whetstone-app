@@ -131,6 +131,7 @@ git clone https://github.com/agustinadeadamo/whetstone-app.git
 cd whetstone-app
 npm install
 cp .env.example .env.local   # fill in keys (see below)
+npm run db:check             # verify the DB connection (SELECT 1)
 npm run db:push              # apply schema
 npm run dev
 ```
