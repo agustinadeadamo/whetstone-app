@@ -37,6 +37,12 @@ non-deterministic model output. Optimize attention accordingly.
 5. **No secrets in the repo.** All keys come from environment variables.
    `.env.local` is gitignored. Update `.env.example` (with empty values) when
    adding a new variable.
+6. **Never edit files containing real secrets while a Claude Code session is
+   active.** This includes `.env.local`, `.env.production`, or any file with
+   real credentials. The file-tracking system auto-attaches modified file
+   contents to the model context, which would expose secrets in the
+   conversation transcript. Edit secret files outside of Claude Code sessions —
+   close the session first, edit in your regular editor, then resume.
 
 ---
 
