@@ -133,9 +133,17 @@ npm install
 cp .env.example .env.local   # fill in keys (see below)
 npm run db:check             # verify the DB connection (SELECT 1)
 npm run db:tables            # list public tables + column counts (schema sanity check)
-npm run db:push              # apply schema
+npm run db:generate          # generate SQL migration from lib/db/schema.ts
+npm run db:exec lib/db/migrations/<file>.sql   # apply a migration (transactional)
+npm run db:exec lib/db/rls.sql                 # apply RLS policies + auth trigger
+npm run db:audit             # verify RLS, policies, and FK cascades
 npm run dev
 ```
+
+> Migrations are applied with `db:exec` (a small transactional SQL runner), not
+> `db:push`. drizzle-kit's `push` crashes introspecting this schema's CHECK
+> constraints; see ADR 0011. The authoring loop is: edit `lib/db/schema.ts` →
+> `db:generate` → review the SQL → `db:exec` it.
 
 Required environment variables (`.env.example`):
 
