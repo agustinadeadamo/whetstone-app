@@ -29,6 +29,11 @@ decision is actually made.
 - **Observability stack.** Logging, tracing, error reporting for the
   AI path specifically. Triggered at step 8.
 
+- **FK cascade behavior on user deletion.** All FKs to `users.id`
+  currently default to NO ACTION. Needs explicit ON DELETE strategy
+  (cascade vs restrict) when the `auth.users` → `public.users` trigger
+  is created. Triggered at sub-paso 1.3 (RLS + auth trigger).
+
 - **Optional: RAG for company-specific grading (supersedes 0007).**
   Only if and when the "company-specific feedback" feature is added.
 

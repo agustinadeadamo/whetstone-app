@@ -122,10 +122,11 @@ created_at    timestamptz
 Server-side source of truth for the free-tier cap.
 
 ```
+id            uuid  pk   defaultRandom
 user_id       uuid  fk → users.id
 period        text       e.g. '2026-05'  (monthly bucket)
 ai_grades     int        default 0
-unique (user_id, period)
+unique (user_id, period)   -- the real business key; the id is a synthetic surrogate (see ADR 0008)
 ```
 
 > RLS: `decks`, `modules`, `questions` are readable/writable only by the
