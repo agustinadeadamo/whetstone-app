@@ -96,7 +96,9 @@ for approval before adding a dependency.
 - **Never invent requirements.** If a task is ambiguous, ask one specific
   question rather than guessing and building the wrong thing.
 - **Commit messages**: imperative mood, scoped. `feat(srs): add weighted
-sampler`, `fix(ai): handle truncated JSON`, `chore: bump deps`.
+sampler`, `fix(ai): handle truncated JSON`, `chore: bump deps`. Commits never
+  include Co-Authored-By footers. Author is the repository owner; Claude Code is
+  a tool, not a co-author.
 - **Don't touch**: migrations already applied, `lib/ai/parse.ts` test cases
   (those encode real failure modes — extend, don't delete), and anything in
   `.env*`.
