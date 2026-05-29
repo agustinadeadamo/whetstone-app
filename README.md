@@ -132,6 +132,7 @@ cd whetstone-app
 npm install
 cp .env.example .env.local   # fill in keys (see below)
 npm run db:check             # verify the DB connection (SELECT 1)
+npm run db:tables            # list public tables + column counts (schema sanity check)
 npm run db:push              # apply schema
 npm run dev
 ```
