@@ -133,6 +133,12 @@ unique (user_id, period)   -- the real business key; the id is a synthetic surro
 > owning user (joined through `deck.user_id`). `progress`, `evaluations`,
 > `usage_counters` filter directly on `user_id`. Seed/default decks, if any,
 > are owned by a system user and cloned into a user's account on signup.
+>
+> FKs: all foreign keys are `ON DELETE CASCADE` — deleting a user removes all
+> their data, and deleting a deck cascades through modules → questions and
+> their dependent progress/evaluation rows (ADR 0010). Cascade behavior is
+> declared in the Drizzle schema (`lib/db/schema.ts`), which stays the source
+> of truth (ADR 0002); `lib/db/rls.sql` owns only the trigger and policies.
 
 ---
 

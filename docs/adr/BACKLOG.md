@@ -29,10 +29,12 @@ decision is actually made.
 - **Observability stack.** Logging, tracing, error reporting for the
   AI path specifically. Triggered at step 8.
 
-- **FK cascade behavior on user deletion.** All FKs to `users.id`
-  currently default to NO ACTION. Needs explicit ON DELETE strategy
-  (cascade vs restrict) when the `auth.users` → `public.users` trigger
-  is created. Triggered at sub-paso 1.3 (RLS + auth trigger).
+- **Restrict self-service updates to `users.plan` (and `email`).** The
+  current RLS UPDATE policy on `public.users` lets a user update their own
+  row, including `plan`. Harmless today, but a tenant must never be able to
+  self-grant `plan = 'pro'` (Golden Rule 4). Needs a column-restricted policy
+  or a guard trigger. Triggered at step 6 (Stripe + entitlement). Surfaced by
+  the security-auditor in sub-paso 1.3.
 
 - **Optional: RAG for company-specific grading (supersedes 0007).**
   Only if and when the "company-specific feedback" feature is added.
@@ -42,4 +44,5 @@ decision is actually made.
 
 ## Committed (already documented)
 
-See numbered ADRs 0001–0007 in this folder.
+See numbered ADRs 0001–0011 in this folder. (FK cascade behavior on user
+deletion, previously listed here, was decided in ADR 0010.)

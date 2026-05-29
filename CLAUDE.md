@@ -125,9 +125,16 @@ npm run dev          # local dev server
 npm run typecheck    # tsc --noEmit
 npm run lint         # eslint
 npm run test         # unit tests + evals
-npm run db:push      # apply schema changes to the database
+npm run db:generate  # generate a SQL migration from lib/db/schema.ts
+npm run db:exec <f>  # apply a .sql file (migration or rls.sql), transactional
+npm run db:audit     # verify RLS, policies, and FK cascades
 npm run db:studio    # inspect the database
 ```
+
+> Migrations are applied with `db:exec`, NOT `db:push` — drizzle-kit's `push`
+> crashes introspecting this schema's CHECK constraints (ADR 0011). The
+> TypeScript schema stays the source of truth: edit `lib/db/schema.ts`,
+> `db:generate`, review, then `db:exec` the generated file.
 
 ---
 
