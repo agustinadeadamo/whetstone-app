@@ -8,6 +8,13 @@
       "when": 1780061186110,
       "tag": "0000_real_falcon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780063592613,
+      "tag": "0001_daily_kingpin",
+      "breakpoints": true
     }
   ]
 }

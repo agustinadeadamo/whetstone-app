@@ -27,7 +27,7 @@ export const decks = pgTable('decks', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: 'cascade' }),
   title: text('title').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
@@ -38,7 +38,7 @@ export const modules = pgTable('modules', {
   id: uuid('id').primaryKey().defaultRandom(),
   deckId: uuid('deck_id')
     .notNull()
-    .references(() => decks.id),
+    .references(() => decks.id, { onDelete: 'cascade' }),
   number: integer('number').notNull(),
   title: text('title').notNull(),
   shortLabel: text('short_label'),
@@ -54,7 +54,7 @@ export const questions = pgTable(
     id: uuid('id').primaryKey().defaultRandom(),
     moduleId: uuid('module_id')
       .notNull()
-      .references(() => modules.id),
+      .references(() => modules.id, { onDelete: 'cascade' }),
     kind: text('kind').notNull().default('question'),
     prompt: text('prompt').notNull(),
     modelAnswer: text('model_answer').notNull(),
@@ -74,10 +74,10 @@ export const progress = pgTable(
     id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id')
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: 'cascade' }),
     questionId: uuid('question_id')
       .notNull()
-      .references(() => questions.id),
+      .references(() => questions.id, { onDelete: 'cascade' }),
     status: text('status').notNull().default('new'),
     timesSeen: integer('times_seen').notNull().default(0),
     timesCorrect: integer('times_correct').notNull().default(0),
@@ -96,10 +96,10 @@ export const evaluations = pgTable('evaluations', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: 'cascade' }),
   questionId: uuid('question_id')
     .notNull()
-    .references(() => questions.id),
+    .references(() => questions.id, { onDelete: 'cascade' }),
   userAnswer: text('user_answer').notNull(),
   score: integer('score').notNull(),
   covered: jsonb('covered').$type<string[]>().notNull(),
@@ -117,7 +117,7 @@ export const usageCounters = pgTable(
     id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id')
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: 'cascade' }),
     period: text('period').notNull(),
     aiGrades: integer('ai_grades').notNull().default(0),
   },
