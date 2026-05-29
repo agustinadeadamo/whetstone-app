@@ -3,6 +3,8 @@ import 'server-only';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
+import * as schema from './schema';
+
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
@@ -22,6 +24,5 @@ if (process.env.NODE_ENV !== 'production') {
   globalForDb.pg = client;
 }
 
-// The schema is passed to drizzle() once lib/db/schema.ts exists, which enables
-// the typed relational query API.
-export const db = drizzle(client);
+// Passing the schema enables the typed relational query API (db.query.*).
+export const db = drizzle(client, { schema });
