@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { createServerClient } from '@supabase/ssr';
+import type { User } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
 /**
@@ -35,4 +36,21 @@ export async function createServerSupabaseClient() {
       },
     },
   );
+}
+
+/**
+ * Resolve the currently authenticated user, server-side. Returns `null` when
+ * there is no valid session.
+ *
+ * Uses `auth.getUser()` (not `getSession()`): `getUser()` revalidates the token
+ * against the Supabase auth server, so the result is trustworthy on the server.
+ * `getSession()` only decodes the cookie and must not be trusted for
+ * authorization decisions.
+ */
+export async function getUser(): Promise<User | null> {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
 }
