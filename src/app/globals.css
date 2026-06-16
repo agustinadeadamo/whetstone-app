@@ -1,4 +1,6 @@
-@import "tailwindcss";
+/* Restrict Tailwind v4 content detection to src/; otherwise it scans the whole
+   project tree for class names. */
+@import "tailwindcss" source("../../src");
 
 /* ============================================================
    STDY_SYS · SOFT MODERN — TOKENS
