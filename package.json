@@ -11,6 +11,7 @@
     "db:check": "node --env-file=.env.local scripts/db-check.mjs",
     "db:tables": "node --env-file=.env.local scripts/db-tables.mjs",
     "db:audit": "node --env-file=.env.local scripts/db-audit-rls.mjs",
+    "db:users": "node --env-file=.env.local scripts/db-users.mjs",
     "db:exec": "node --env-file=.env.local scripts/db-exec-sql.mjs",
     "db:push": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
     "db:generate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs generate",
@@ -24,7 +25,8 @@
     "postgres": "^3.4.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
