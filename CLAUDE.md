@@ -66,6 +66,10 @@ for approval before adding a dependency.
 
 ## Code conventions
 
+- **Language: English only.** All code, comments, documentation, and
+  user-facing UI strings are written in English — no Spanish in identifiers,
+  copy, error messages, or docs. The app does not use i18n at this stage:
+  hardcode English directly.
 - TypeScript strict. Shared types flow from the DB schema outward; derive
   types, don't redeclare them.
 - Server actions and route handlers validate input with Zod before doing

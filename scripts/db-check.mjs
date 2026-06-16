@@ -13,7 +13,7 @@ const sql = postgres(url, { max: 1, idle_timeout: 5, connect_timeout: 10 });
 try {
   const rows = await sql`SELECT 1 AS ok`;
   if (rows[0]?.ok === 1) {
-    console.log("conexión OK");
+    console.log("connection OK");
   } else {
     console.error("Unexpected result:", rows);
     process.exitCode = 1;

@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}>
       <body>{children}</body>
     </html>
   );
