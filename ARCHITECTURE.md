@@ -144,46 +144,52 @@ unique (user_id, period)   -- the real business key; the id is a synthetic surro
 
 ## 3. Folder structure
 
+Routes live under `src/app/` (Next `src/` convention); shared logic lives in
+`lib/` at the repo root and is imported via the `@/lib/*` path alias. The `@/*`
+alias maps to `src/*`. Route groups (`(account)`, `(study)`) organize routes
+without affecting URLs.
+
 ```
-app/
-  (study)/
-    flashcards/        # weighted SRS flashcards
-    glossary/          # term flashcards + list view
-    mock/              # timed mock interview
-    explain/           # out-loud practice
-    map/               # mind map of progress
-  (account)/
-    login/
-    billing/
-    settings/
-  api/
-    grade/route.ts     # POST: grade a written answer (server-side AI)
-    stripe/webhook/route.ts
-  globals.css          # design tokens (CSS custom properties)
-  layout.tsx
-lib/
+src/
+  middleware.ts        # refreshes the Supabase session on every request
+  app/
+    (account)/
+      _components/      # client auth forms (login-form, signup-form)
+      login/           # email + password sign-in
+      signup/          # email + password sign-up (email confirmation)
+      account/         # protected: shows the logged-in user + logout
+      billing/         # (planned) Stripe
+      settings/        # (planned)
+      layout.tsx       # centered card shell for account/auth screens
+    (study)/           # (planned) flashcards, glossary, mock, explain, map
+    auth/
+      callback/route.ts # email-confirmation code exchange
+    api/
+      grade/route.ts     # (planned) POST: grade an answer (server-side AI)
+      stripe/webhook/route.ts  # (planned)
+    globals.css        # design tokens (CSS custom properties)
+    layout.tsx
+    page.tsx
+lib/                   # imported as @/lib/* (repo root, not under src/)
+  auth.ts              # server Supabase client + getUser() (server-only)
+  auth-client.ts       # browser Supabase client factory
+  auth-actions.ts      # 'use server' signUp / signIn / signOut (Zod-validated)
   srs/
-    sampler.ts         # weighted random ordering (pure, tested)
-    sampler.test.ts
+    sampler.ts         # (planned) weighted random ordering (pure, tested)
   ai/
-    client.ts          # Anthropic client (server-only)
-    prompt.ts          # grading prompt builder
-    parse.ts           # parse → validate → repair (pure, tested)
-    parse.test.ts
-    evals/
-      cases.ts         # (answer, expected score range) fixtures
-      run.test.ts      # regression test for the grading pipeline
+    client.ts          # (planned) Anthropic client (server-only)
+    prompt.ts          # (planned) grading prompt builder
+    parse.ts           # (planned) parse → validate → repair (pure, tested)
+    evals/             # (planned) (answer, expected score range) fixtures
   db/
     schema.ts          # Drizzle schema
-    queries.ts         # typed query functions
-    rls.sql            # Row-Level Security policies
-  auth.ts              # Supabase auth helpers
-  ratelimit.ts         # Upstash token bucket
-  stripe.ts            # checkout + webhook handling
-  log.ts               # structured logger
-components/
-  ui/                  # primitives (button, card, badge, ...)
-  study/               # flashcard, timer, mind-map, feedback panel
+    client.ts          # Drizzle client (server-only)
+    rls.sql            # RLS policies + auth trigger + anon REVOKE
+    migrations/        # generated SQL, applied via db:exec (ADR 0011)
+  ratelimit.ts         # (planned) Upstash token bucket
+  stripe.ts            # (planned) checkout + webhook handling
+  log.ts               # (planned) structured logger
+scripts/               # db:check, db:tables, db:audit, db:users, db:exec
 ```
 
 ---

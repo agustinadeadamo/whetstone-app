@@ -44,5 +44,5 @@ decision is actually made.
 
 ## Committed (already documented)
 
-See numbered ADRs 0001–0011 in this folder. (FK cascade behavior on user
+See numbered ADRs 0001–0012 in this folder. (FK cascade behavior on user
 deletion, previously listed here, was decided in ADR 0010.)
