@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "db:check": "node --env-file=.env.local scripts/db-check.mjs",
     "db:tables": "node --env-file=.env.local scripts/db-tables.mjs",
     "db:audit": "node --env-file=.env.local scripts/db-audit-rls.mjs",
@@ -37,6 +39,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   }
 }
