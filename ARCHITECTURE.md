@@ -175,11 +175,11 @@ lib/                   # imported as @/lib/* (repo root, not under src/)
   auth-client.ts       # browser Supabase client factory
   auth-actions.ts      # 'use server' signUp / signIn / signOut (Zod-validated)
   srs/
-    sampler.ts         # (planned) weighted random ordering (pure, tested)
+    sampler.ts         # weighted random ordering (pure, tested)
   ai/
     client.ts          # (planned) Anthropic client (server-only)
     prompt.ts          # (planned) grading prompt builder
-    parse.ts           # (planned) parse → validate → repair (pure, tested)
+    parse.ts           # parse → extract → repair (pure, tested); Zod validate at step 5
     evals/             # (planned) (answer, expected score range) fixtures
   db/
     schema.ts          # Drizzle schema
@@ -276,16 +276,17 @@ Build in this order, and only as far as a real need justifies:
 ## 6. Build order (each step is a Claude Code task)
 
 Do these sequentially. Each must compile, pass typecheck/tests, and deploy
-before moving on.
+before moving on. Status: steps 1–3 complete.
 
-1. **Scaffold.** `create-next-app` (TS, Tailwind, App Router). Wire Tailwind
+1. ✅ **Scaffold.** `create-next-app` (TS, Tailwind, App Router). Wire Tailwind
    tokens from the design system into `globals.css`. Deploy a placeholder to
    Vercel so the pipeline works end to end.
-2. **DB + auth.** Drizzle schema, RLS policies, Supabase Auth. Login works;
+2. ✅ **DB + auth.** Drizzle schema, RLS policies, Supabase Auth. Login works;
    a logged-in user can be resolved server-side.
-3. **Migrate proven logic.** Port the spaced-repetition sampler and the
+3. ✅ **Migrate proven logic.** Port the spaced-repetition sampler and the
    parse/repair module from the prototype, with their unit tests. These are
-   pure functions — port, don't reinvent.
+   pure functions — port, don't reinvent. Vitest is the runner (ADR 0013), and
+   a minimal CI (typecheck + test) runs on every push/PR (ADR 0015).
 4. **Study UI.** Flashcards, glossary, mock, explain, mind map as components
    reading from the DB. Reference the prototype for behavior.
 5. **AI grading.** The `/api/grade` endpoint with structured outputs +
@@ -294,8 +295,9 @@ before moving on.
    reconciliation. Free tier capped, pro unlimited.
 7. **Study-coach agent.** Tool-using agent that assembles adaptive sessions
    from progress. Optional but high-value for the portfolio.
-8. **Hardening.** Playwright E2E on the main flows, CI on every PR
-   (typecheck + lint + test), logging/observability on the AI path.
+8. **Hardening.** Playwright E2E on the main flows, full CI (extends the
+   minimal typecheck + test pipeline from step 3 with E2E, lint-as-gate, and
+   Lighthouse budgets), logging/observability on the AI path.
 
 ---
 
