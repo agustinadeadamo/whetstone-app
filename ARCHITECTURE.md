@@ -231,8 +231,8 @@ The core server-side AI path.
 
 Pure function, no I/O. Weighted reservoir sampling
 (Efraimidis–Spirakis): each item's key is `random ** (1 / weight)`, sorted
-ascending. Weights: `weak: 4, new: 3, learning: 2, mastered: 1`. Reordered
-on every call — no deterministic ordering.
+descending (highest key first). Weights: `weak: 4, new: 3, learning: 2,
+mastered: 1`. Reordered on every call — no deterministic ordering.
 
 ### Parse/repair — `lib/ai/parse.ts`
 
